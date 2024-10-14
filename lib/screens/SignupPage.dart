@@ -1,20 +1,20 @@
-import 'package:biomark/screens/SignupPage.dart';
+import 'package:biomark/screens/LoginPage.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Login to Account',
+          'Signup',
           style: TextStyle(
             color: Colors.blueGrey,
             fontSize: 12.0,
@@ -33,42 +33,40 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
 
-
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Center(
             child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // const SizedBox(height: 150.0),
+
                   SizedBox(
                     width: 100,
-                    height: MediaQuery.of(context).size.height * 0.20,
+                    height: MediaQuery.of(context).size.height * 0.15,
                     // child: Container(
                     //   color: Colors.blue,
                     //   child: const Center(child: Text('Hello')),
                     // ),
                   ),
 
-                  // Black box that animates from bottom to top
                   Container(
-                      height: MediaQuery.of(context).size.height * 0.70,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.6),
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.5), // Shadow color
-                            offset: const Offset(0, 4), // X and Y offset
-                            blurRadius: 10.0, // Blur radius
-                            spreadRadius: 2.0, // Spread radius
-                          ),
-                        ],
-                      ),
+                    height: MediaQuery.of(context).size.height * 0.75,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.6),
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5), // Shadow color
+                          offset: const Offset(0, 4), // X and Y offset
+                          blurRadius: 10.0, // Blur radius
+                          spreadRadius: 2.0, // Spread radius
+                        ),
+                      ],
+                    ),
 
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -76,12 +74,12 @@ class _LoginPageState extends State<LoginPage> {
 
                         //Login text
                         const Text(
-                          'Login',
+                          'Create Your Account',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 30.0,
-                              // fontFamily: 'Inter',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 30.0,
+                            // fontFamily: 'Inter',
                           ),
                         ),
 
@@ -94,7 +92,25 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
 
-                        //Email address text field
+                        //Email address text
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          margin: const EdgeInsets.only(top: 20.0),
+
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Email",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        //Email address text input field
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           margin: const EdgeInsets.only(top: 20.0),
@@ -119,7 +135,25 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
 
-                        //password text field
+                        //Password text
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          margin: const EdgeInsets.only(top: 20.0),
+
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Password",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        //password text input field
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           margin: const EdgeInsets.only(top: 20.0),
@@ -145,32 +179,55 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
 
-                        //forgot password
+                        //re-enter password text input field
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           margin: const EdgeInsets.only(top: 20.0),
 
-                          child: Row(
+                          child: TextField(
+                            style: const TextStyle(
+                              color: Color(0xFFB6B7B7),
+                              decoration: TextDecoration.none,
+                            ),
+                            obscureText: true, //encrypt the text
+                            decoration: InputDecoration(
+                              hintText: 'Re - Enter Your Password',
+                              fillColor: const Color(0xFF2C3F50), // Set your hexadecimal color here
+                              filled: true,
+                              hintStyle: const TextStyle(
+                                color: Color(0xFFB6B7B7), // Change this to your desired color
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none, // To remove the border if desired
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        //Password detail text
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          margin: const EdgeInsets.only(top: 10.0),
+
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              TextButton(
-                                onPressed: () {
-                                  // Handle forgot password logic here
-                                },
-                                child: const Text(
-                                  'Forgot password?',
+                              Expanded(
+                                child: Text(
+                                  "Your password must contain at least an Uppercase character,a lower case character and a symbol ",
                                   style: TextStyle(
-                                    color: Color(0xFF3498DB),
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: Color(0xFF3498DB),
+                                    color: Colors.white,
+                                    fontSize: 11.0,
                                   ),
+                                  softWrap: true,
                                 ),
                               ),
                             ],
                           ),
                         ),
 
-                        //Login button
+                        //Signup button
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           margin: const EdgeInsets.only(top: 40.0),
@@ -181,18 +238,18 @@ class _LoginPageState extends State<LoginPage> {
                           ),
 
                           child: TextButton(
-                              style: TextButton.styleFrom(
-                                backgroundColor: const Color(0xFF3498DB),
-                                padding: const EdgeInsets.all(16.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
-                                ),
+                            style: TextButton.styleFrom(
+                              backgroundColor: const Color(0xFF3498DB),
+                              padding: const EdgeInsets.all(16.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
                               ),
-                              onPressed: () {},
-                              child: const Text(
-                                'Login',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              'Signup',
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
 
@@ -205,18 +262,18 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                "Don't have an account?",
+                                "Already have an account?",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
                               ),
                               TextButton(
-                                onPressed: () { 
-                                  Navigator.push(context, 
-                                      MaterialPageRoute(builder: (_) => const SignupPage()));
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) => LoginPage()));
                                 },
                                 child: const Text(
-                                  'Create One!',
+                                  'Login!',
                                   style: TextStyle(
                                     color: Color(0xFF3498DB),
                                     decoration: TextDecoration.underline,
@@ -237,10 +294,10 @@ class _LoginPageState extends State<LoginPage> {
 
                 ],
               ),
+
             ),
           ),
         ),
-
 
       ),
     );
