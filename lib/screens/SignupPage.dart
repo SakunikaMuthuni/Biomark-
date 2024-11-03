@@ -1,6 +1,10 @@
 import 'package:biomark/screens/LoginPage.dart';
 import 'package:biomark/Comm/getTextFromFields.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:biomark/DatabaseHandler/DbHelper.dart';
+import '../Comm/comHelper.dart';
+
 
 class SignupPage extends StatefulWidget {
 
@@ -13,12 +17,26 @@ class _SignupPageState extends State<SignupPage> {
   final _conPassword = TextEditingController();
   final _conRePassword = TextEditingController();
 
-  signUp(){
-    print('OK');
+  signUp() async {
+    String uemail = _conEmail.text;
+    String upassword = _conPassword.text;
+    String urepassword = _conRePassword.text;
+
+    if (uemail.isEmpty) {
+      alertDialog("Please Enter Your Email Address");
+      return; // Stop further execution
+    } else if (upassword.isEmpty) {
+      alertDialog("Please Enter Your Password");
+      return; // Stop further execution
+    } else if (urepassword.isEmpty) {
+      alertDialog("Please Re-Enter the Password");
+      return; // Stop further execution
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -185,7 +203,7 @@ class _SignupPageState extends State<SignupPage> {
                                 borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
                               ),
                             ),
-                            onPressed: signUp(),
+                            onPressed: signUp,
                             child: const Text(
                               'Signup',
                               style: TextStyle(color: Colors.white),
