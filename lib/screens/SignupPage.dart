@@ -3,16 +3,19 @@ import 'package:biomark/Comm/getTextFromFields.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
 class _SignupPageState extends State<SignupPage> {
   final _conEmail = TextEditingController();
   final _conPassword = TextEditingController();
   final _conRePassword = TextEditingController();
+
+  signUp(){
+    print('OK');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +185,7 @@ class _SignupPageState extends State<SignupPage> {
                                 borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: signUp(),
                             child: const Text(
                               'Signup',
                               style: TextStyle(color: Colors.white),
