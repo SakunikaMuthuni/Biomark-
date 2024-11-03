@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -171,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                               TextButton(
                                 onPressed: () { 
                                   Navigator.push(context, 
-                                      MaterialPageRoute(builder: (_) => const SignupPage()));
+                                      MaterialPageRoute(builder: (_) => SignupPage()));
                                 },
                                 child: const Text(
                                   'Create One!',
