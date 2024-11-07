@@ -1,5 +1,6 @@
 import 'package:biomark/screens/LoginPage.dart';
-import 'package:biomark/Comm/getTextFromFields.dart';
+import 'package:biomark/screens/SignupView.dart';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:biomark/DatabaseHandler/DbHelper.dart';
@@ -195,21 +196,30 @@ class _SignupPageState extends State<SignupPage> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
 
-                          child: TextButton(
+                            child: TextButton(
                             style: TextButton.styleFrom(
                               backgroundColor: const Color(0xFF3498DB),
                               padding: const EdgeInsets.all(16.0),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
+                              borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
                               ),
                             ),
+
+                            onPressed: () {
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignupView()),
+                              );
+                            },
+
                             onPressed: signUp,
+
                             child: const Text(
                               'Signup',
                               style: TextStyle(color: Colors.white),
                             ),
+                            ),
                           ),
-                        ),
 
                         //Already have an account
                         Container(

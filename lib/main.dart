@@ -1,4 +1,5 @@
 import 'package:biomark/screens/LoginPage.dart';
+import 'package:biomark/screens/SignupPage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,6 +20,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: LoginPage(),
+      routes: {
+
+        '/SignupPage': (context) => SignupPage(),
+
+        // Add other routes here
+
+      },
     );
   }
 }
