@@ -1,3 +1,4 @@
+import 'package:biomark/screens/LoginView.dart';
 import 'package:biomark/screens/SignupPage.dart';
 import 'package:flutter/material.dart';
 
@@ -177,22 +178,27 @@ class _LoginPageState extends State<LoginPage> {
                           width: double.infinity,
 
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.0),
+                          borderRadius: BorderRadius.circular(12.0),
                           ),
 
                           child: TextButton(
-                              style: TextButton.styleFrom(
-                                backgroundColor: const Color(0xFF3498DB),
-                                padding: const EdgeInsets.all(16.0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
-                                ),
-                              ),
-                              onPressed: () {},
-                              child: const Text(
-                                'Login',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                            style: TextButton.styleFrom(
+                            backgroundColor: const Color(0xFF3498DB),
+                            padding: const EdgeInsets.all(16.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
+                            ),
+                            ),
+                            onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LoginView()),
+                            );
+                            },
+                            child: const Text(
+                            'Login',
+                            style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
 

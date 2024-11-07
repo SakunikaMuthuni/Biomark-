@@ -1,4 +1,5 @@
 import 'package:biomark/screens/LoginPage.dart';
+import 'package:biomark/screens/SignupView.dart';
 import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
@@ -237,21 +238,26 @@ class _SignupPageState extends State<SignupPage> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
 
-                          child: TextButton(
+                            child: TextButton(
                             style: TextButton.styleFrom(
                               backgroundColor: const Color(0xFF3498DB),
                               padding: const EdgeInsets.all(16.0),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
+                              borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignupView()),
+                              );
+                            },
                             child: const Text(
                               'Signup',
                               style: TextStyle(color: Colors.white),
                             ),
+                            ),
                           ),
-                        ),
 
                         //create a new account
                         Container(
