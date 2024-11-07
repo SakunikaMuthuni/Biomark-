@@ -1,14 +1,17 @@
 import 'package:biomark/screens/LoginView.dart';
 import 'package:biomark/screens/SignupPage.dart';
+import 'package:biomark/Comm/getTextFromFields.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _conEmail = TextEditingController();
+  final _conPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
 
@@ -96,55 +99,10 @@ class _LoginPageState extends State<LoginPage> {
                         ),
 
                         //Email address text field
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          margin: const EdgeInsets.only(top: 20.0),
-
-                          child: TextField(
-                            style: const TextStyle(
-                              color: Color(0xFFB6B7B7),
-                              decoration: TextDecoration.none,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Enter Your Email Address',
-                              fillColor: const Color(0xFF2C3F50),
-                              filled: true,
-                              hintStyle: const TextStyle(
-                                color: Color(0xFFB6B7B7),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide.none, // To remove the border
-                              ),
-                            ),
-                          ),
-                        ),
+                        getTextFromFields(controller: _conEmail ,hintName: 'Enter Your Email Address'),
 
                         //password text field
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          margin: const EdgeInsets.only(top: 20.0),
-
-                          child: TextField(
-                            style: const TextStyle(
-                              color: Color(0xFFB6B7B7),
-                              decoration: TextDecoration.none,
-                            ),
-                            obscureText: true, //encrypt the text
-                            decoration: InputDecoration(
-                              hintText: 'Enter Your Password',
-                              fillColor: const Color(0xFF2C3F50), // Set your hexadecimal color here
-                              filled: true,
-                              hintStyle: const TextStyle(
-                                color: Color(0xFFB6B7B7), // Change this to your desired color
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide.none, // To remove the border if desired
-                              ),
-                            ),
-                          ),
-                        ),
+                        getTextFromFields(controller: _conPassword ,hintName: 'Enter Your Password', isObscureText: true),
 
                         //forgot password
                         Container(
@@ -219,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
                               TextButton(
                                 onPressed: () { 
                                   Navigator.push(context, 
-                                      MaterialPageRoute(builder: (_) => const SignupPage()));
+                                      MaterialPageRoute(builder: (_) => SignupPage()));
                                 },
                                 child: const Text(
                                   'Create One!',
