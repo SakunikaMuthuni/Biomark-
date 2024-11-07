@@ -1,43 +1,17 @@
 import 'package:biomark/screens/LoginPage.dart';
 import 'package:biomark/screens/SignupView.dart';
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:biomark/DatabaseHandler/DbHelper.dart';
-import '../Comm/comHelper.dart';
-
 
 class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
-  _SignupPageState createState() => _SignupPageState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final _conEmail = TextEditingController();
-  final _conPassword = TextEditingController();
-  final _conRePassword = TextEditingController();
-
-  signUp() async {
-    String uemail = _conEmail.text;
-    String upassword = _conPassword.text;
-    String urepassword = _conRePassword.text;
-
-    if (uemail.isEmpty) {
-      alertDialog("Please Enter Your Email Address");
-      return; // Stop further execution
-    } else if (upassword.isEmpty) {
-      alertDialog("Please Enter Your Password");
-      return; // Stop further execution
-    } else if (urepassword.isEmpty) {
-      alertDialog("Please Re-Enter the Password");
-      return; // Stop further execution
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -138,7 +112,29 @@ class _SignupPageState extends State<SignupPage> {
                         ),
 
                         //Email address text input field
-                        getTextFromFields(controller: _conEmail ,hintName: 'Enter Your Email Address', inputType: TextInputType.emailAddress),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          margin: const EdgeInsets.only(top: 20.0),
+
+                          child: TextField(
+                            style: const TextStyle(
+                              color: Color(0xFFB6B7B7),
+                              decoration: TextDecoration.none,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Enter Your Email Address',
+                              fillColor: const Color(0xFF2C3F50),
+                              filled: true,
+                              hintStyle: const TextStyle(
+                                color: Color(0xFFB6B7B7),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none, // To remove the border
+                              ),
+                            ),
+                          ),
+                        ),
 
                         //Password text
                         Container(
@@ -159,10 +155,56 @@ class _SignupPageState extends State<SignupPage> {
                         ),
 
                         //password text input field
-                        getTextFromFields(controller: _conPassword ,hintName: 'Enter Your Password', isObscureText: true),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          margin: const EdgeInsets.only(top: 20.0),
+
+                          child: TextField(
+                            style: const TextStyle(
+                              color: Color(0xFFB6B7B7),
+                              decoration: TextDecoration.none,
+                            ),
+                            obscureText: true, //encrypt the text
+                            decoration: InputDecoration(
+                              hintText: 'Enter Your Password',
+                              fillColor: const Color(0xFF2C3F50), // Set your hexadecimal color here
+                              filled: true,
+                              hintStyle: const TextStyle(
+                                color: Color(0xFFB6B7B7), // Change this to your desired color
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none, // To remove the border if desired
+                              ),
+                            ),
+                          ),
+                        ),
 
                         //re-enter password text input field
-                        getTextFromFields(controller: _conRePassword ,hintName: 'Re-Enter Your Password', isObscureText: true),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          margin: const EdgeInsets.only(top: 20.0),
+
+                          child: TextField(
+                            style: const TextStyle(
+                              color: Color(0xFFB6B7B7),
+                              decoration: TextDecoration.none,
+                            ),
+                            obscureText: true, //encrypt the text
+                            decoration: InputDecoration(
+                              hintText: 'Re - Enter Your Password',
+                              fillColor: const Color(0xFF2C3F50), // Set your hexadecimal color here
+                              filled: true,
+                              hintStyle: const TextStyle(
+                                color: Color(0xFFB6B7B7), // Change this to your desired color
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: BorderSide.none, // To remove the border if desired
+                              ),
+                            ),
+                          ),
+                        ),
 
                         //Password detail text
                         Container(
@@ -204,16 +246,12 @@ class _SignupPageState extends State<SignupPage> {
                               borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
                               ),
                             ),
-
                             onPressed: () {
                               Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => SignupView()),
                               );
                             },
-
-                            onPressed: signUp,
-
                             child: const Text(
                               'Signup',
                               style: TextStyle(color: Colors.white),
@@ -221,7 +259,7 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ),
 
-                        //Already have an account
+                        //create a new account
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           margin: const EdgeInsets.only(top: 20.0),
@@ -237,10 +275,8 @@ class _SignupPageState extends State<SignupPage> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(builder: (_) => LoginPage()),
-                                      (Route<dynamic> route) => false);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) => LoginPage()));
                                 },
                                 child: const Text(
                                   'Login!',
