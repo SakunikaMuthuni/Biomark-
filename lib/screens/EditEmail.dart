@@ -8,18 +8,18 @@ class EditEmail extends StatefulWidget {
 }
 
 class _EditEmailState extends State<EditEmail> {
-  final TextStyle labelStyle = TextStyle(color: Colors.white, fontSize: 14);
-  final TextStyle inputTextStyle = TextStyle(color: Colors.white);
+  final TextStyle labelStyle = const TextStyle(color: Colors.white, fontSize: 14);
+  final TextStyle inputTextStyle = const TextStyle(color: Colors.white);
 
 @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0A0E21),
+      backgroundColor: const Color(0xFF0A0E21),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 100,
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text(
             'Biomark',
             style: TextStyle(fontSize: 14, color: Colors.white),
@@ -28,9 +28,9 @@ class _EditEmailState extends State<EditEmail> {
         
         actions: [
             IconButton(
-            icon: Icon(Icons.notifications, color: Colors.white),onPressed: () {},
+            icon: const Icon(Icons.notifications, color: Colors.white),onPressed: () {},
             ),
-          IconButton(icon: Icon(Icons.settings, color: Colors.white), onPressed: () {}),
+          IconButton(icon: const Icon(Icons.settings, color: Colors.white), onPressed: () {}),
         ],
       ),
       body: Padding(
@@ -40,22 +40,22 @@ class _EditEmailState extends State<EditEmail> {
             Row(
               children: [
               IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white),
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
                 Navigator.of(context).pop();
                 },
               ),
-              Text(
+              const Text(
                 'Edit Email',
                 style: TextStyle(
-                color: const Color.fromARGB(255, 254, 254, 254),
+                color: Color.fromARGB(255, 254, 254, 254),
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 ),
               ),
               ],
             ),
-            Text(
+            const Text(
               'Current Email',
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
@@ -74,7 +74,7 @@ class _EditEmailState extends State<EditEmail> {
               style: TextStyle(color: Colors.white),
             ),
             SizedBox(height: 16),
-            Text(
+            const Text(
               'New Email',
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
@@ -97,18 +97,18 @@ class _EditEmailState extends State<EditEmail> {
               onTap: () {
                 // Handle send verification code action
               },
-              child: Text(
+              child: const Text(
                 'Send Verification Code',
                 style: TextStyle(color: Colors.blue, fontSize: 16),
               ),
             ),
             SizedBox(height: 16),
-            Text(
+            const Text(
               'A verification code will be sent to the new email address',
               style: TextStyle(color: Colors.grey, fontSize: 14),
             ),
             SizedBox(height: 60),
-            Text(
+            const Text(
               'Enter the Verification Code',
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
@@ -156,7 +156,7 @@ class _EditEmailState extends State<EditEmail> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Verify Email',
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
