@@ -1,3 +1,4 @@
+import 'package:biomark/Comm/comHelper.dart';
 import 'package:flutter/material.dart';
 
 class getTextFromFields extends StatelessWidget {
@@ -6,7 +7,11 @@ class getTextFromFields extends StatelessWidget {
   bool isObscureText;
   TextInputType inputType;
 
-  getTextFromFields({required this.controller, required this.hintName, this.isObscureText = false, this.inputType = TextInputType.text});
+  getTextFromFields(
+      {required this.controller,
+        required this.hintName,
+        this.isObscureText = false,
+        this.inputType = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +19,21 @@ class getTextFromFields extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       margin: const EdgeInsets.only(top: 20.0),
 
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         obscureText: isObscureText,
         keyboardType: inputType,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter $hintName';
+          }
+          if(hintName =="Enter Your Email Address"  && !validateEmail(value)){
+            return "Please Enter Valid Email Address";
+          }
+
+          return null;
+        },
+        onSaved: (val) => controller.text = val!,
         style: const TextStyle(
           color: Color(0xFFB6B7B7),
           decoration: TextDecoration.none,
