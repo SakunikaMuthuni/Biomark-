@@ -1,3 +1,5 @@
+import 'package:biomark/DatabaseHandler/DbHelper.dart';
+import 'package:biomark/Model/UserModel.dart';
 import 'package:biomark/screens/LoginPage.dart';
 import 'package:biomark/screens/SignupView.dart';
 import 'package:flutter/material.dart';
@@ -19,31 +21,44 @@ class _SignupPageState extends State<SignupPage> {
   final _conEmail = TextEditingController();
   final _conPassword = TextEditingController();
   final _conRePassword = TextEditingController();
+  var dbHelper;
+
+  @override
+  void initState() {
+    super.initState();
+    dbHelper = DbHelper();
+  }
 
   signUp() async {
-    final form = _formKey.currentState;
-
     String uemail = _conEmail.text;
     String upassword = _conPassword.text;
     String urepassword = _conRePassword.text;
 
-    if(form!.validate()){
+    if (_formKey.currentState!.validate()) {
+      if (upassword != urepassword) {
+        alertDialog("Password Mismatch");
+      } else {
+        _formKey.currentState?.save();
+
+        bool emailExists = await dbHelper.emailExists(uemail);
+
+        if(emailExists){
+          alertDialog("Email already exists. Please use a different email address.");
+        }else{
+          UserModel uModel = UserModel(uemail, upassword);
+          await dbHelper.saveData(uModel).then((userData){
+            // Navigator.push(
+            //     context, MaterialPageRoute(builder: (_) => SignupView()));
+            alertDialog("Successfully Saved");
 
 
-    }else{
-
+          }).catchError((error){
+            print(error);
+            alertDialog("Error: Data Save Fail");
+          });
+        }
+      }
     }
-
-    // if (uemail.isEmpty) {
-    //   alertDialog("Please Enter Your Email Address");
-    //   return; // Stop further execution
-    // } else if (upassword.isEmpty) {
-    //   alertDialog("Please Enter Your Password");
-    //   return; // Stop further execution
-    // } else if (urepassword.isEmpty) {
-    //   alertDialog("Please Re-Enter the Password");
-    //   return; // Stop further execution
-    // }
   }
 
   @override

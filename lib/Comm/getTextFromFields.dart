@@ -25,10 +25,10 @@ class getTextFromFields extends StatelessWidget {
         keyboardType: inputType,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Please enter $hintName';
+            return 'Please $hintName';
           }
           if(hintName =="Enter Your Email Address"  && !validateEmail(value)){
-            return "Please Enter Valid Email Address";
+            return "Invalid Email Address";
           }
 
           return null;

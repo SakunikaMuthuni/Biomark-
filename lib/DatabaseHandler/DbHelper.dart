@@ -3,8 +3,10 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:io' as io;
 
+import 'package:biomark/Model/UserModel.dart';
+
 class DbHelper{
-  static late Database _db;
+  static Database? _db;
 
   static const DB_Name = 'test.db';
   static const String Table_User = 'user';
@@ -26,17 +28,19 @@ class DbHelper{
   static const String User_EyeColour = 'user_eyecolour';
 
   Future<Database> get db async {
-    if(_db!=null){
-      return _db;
+    if (_db != null) {
+      return _db!;
     }
+
     _db = await initDb();
-    return _db;
+    return _db!;
   }
 
   initDb() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, DB_Name);
     var db = await openDatabase(path, version: Version, onCreate: _onCreate);
+    print("Database opened successfully");
     return db;
   }
 
@@ -58,5 +62,34 @@ class DbHelper{
         "$User_EyeColour TEXT"
         ")");
   }
-}
 
+  Future<int> saveData(UserModel user) async{
+    var dbClient = await db;
+    var res = await dbClient.insert(Table_User, user.toMap());
+    return res;
+  }
+
+  Future<bool> emailExists(String email) async {
+    final db = await this.db;
+    var result = await db.query(
+      Table_User,
+      columns: [User_Email],
+      where: '$User_Email = ?',
+      whereArgs: [email],
+    );
+    return result.isNotEmpty;
+  }
+
+  Future<UserModel?> getLoginUser(String user_email, String user_password) async{
+    var dbClient = await db;
+    var res = await dbClient.rawQuery("SELECT * FROM $Table_User WHERE"
+        "$User_Email = '$user_email' AND"
+        "$User_Password = '$user_password'");
+
+    if(res.isNotEmpty){
+      return UserModel.fromMap(res.first);
+    }
+
+    return null;
+  }
+}
