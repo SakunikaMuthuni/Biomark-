@@ -1,3 +1,4 @@
+import 'package:biomark/Model/UserModel.dart';
 import 'package:biomark/screens/LoginView.dart';
 import 'package:biomark/screens/SignupPage.dart';
 import 'package:biomark/Comm/getTextFromFields.dart';
@@ -24,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
     dbHelper = DbHelper();
   }
 
-  login(){
+  login() async {
     String uemail = _conEmail.text;
     String upassword = _conPassword.text;
 
@@ -33,9 +34,28 @@ class _LoginPageState extends State<LoginPage> {
     }else if(upassword.isEmpty){
       alertDialog("Please enter the Password");
     }else{
+      await dbHelper.getLoginUser(uemail, upassword).then((userData) {
+        if(userData != null){
+          Navigator.pushAndRemoveUntil(
+              context, MaterialPageRoute(builder: (_) => LoginView()),
+                  (Route<dynamic> route) => false);
+        }else{
+          alertDialog("Error: User not Found");
+        }
 
+      }).catchError((error){
+        print(error);
+        alertDialog("Login Failed");
+      });
     }
   }
+
+  // Future setSP(UserModel user) async{
+  //   final SharedPreferences sp = await _pref;
+  //
+  //   sp.setString("user_email", user.user_email);
+  //   sp.setString("user_password", user.user_password);
+  // }
 
   @override
   Widget build(BuildContext context) {
