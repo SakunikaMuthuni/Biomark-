@@ -3,14 +3,39 @@ import 'package:biomark/screens/SignupPage.dart';
 import 'package:biomark/Comm/getTextFromFields.dart';
 import 'package:flutter/material.dart';
 
+import '../Comm/comHelper.dart';
+import '../DatabaseHandler/DbHelper.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = new GlobalKey<FormState>();
+
   final _conEmail = TextEditingController();
   final _conPassword = TextEditingController();
+  var dbHelper;
+
+  @override
+  void initState(){
+    super.initState();
+    dbHelper = DbHelper();
+  }
+
+  login(){
+    String uemail = _conEmail.text;
+    String upassword = _conPassword.text;
+
+    if (uemail.isEmpty) {
+      alertDialog("Please enter the Email Address");
+    }else if(upassword.isEmpty){
+      alertDialog("Please enter the Password");
+    }else{
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,12 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
                             ),
                             ),
-                            onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const LoginView()),
-                            );
-                            },
+                            onPressed: login,
                             child: const Text(
                             'Login',
                             style: TextStyle(color: Colors.white),
