@@ -2,6 +2,7 @@ import 'package:biomark/Model/UserModel.dart';
 import 'package:biomark/screens/LoginView.dart';
 import 'package:biomark/screens/SignupPage.dart';
 import 'package:biomark/Comm/getTextFromFields.dart';
+import 'package:biomark/screens/SignupView.dart';
 import 'package:flutter/material.dart';
 
 import '../Comm/comHelper.dart';
@@ -38,6 +39,8 @@ class _LoginPageState extends State<LoginPage> {
         if(userData != null){
           Navigator.pushAndRemoveUntil(
               context, MaterialPageRoute(builder: (_) => LoginView()),
+              // Navigator.push(
+              //     context, MaterialPageRoute(builder: (_) => SignupView(uemail: uemail)));
                   (Route<dynamic> route) => false);
         }else{
           alertDialog("Error: User not Found");

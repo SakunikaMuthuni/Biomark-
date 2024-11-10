@@ -47,8 +47,8 @@ class _SignupPageState extends State<SignupPage> {
         }else{
           UserModel uModel = UserModel(uemail, upassword);
           await dbHelper.saveData(uModel).then((userData){
-            // Navigator.push(
-            //     context, MaterialPageRoute(builder: (_) => SignupView()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => SignupView(uemail: uemail)));
             alertDialog("Successfully Saved");
 
 
