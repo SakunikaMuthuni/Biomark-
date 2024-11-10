@@ -2,17 +2,65 @@ import 'package:flutter/material.dart';
 import 'package:biomark/screens/Settings.dart';
 import 'package:biomark/screens/LoginView.dart';
 
+import '../Comm/comHelper.dart';
+import '../DatabaseHandler/DbHelper.dart';
+
 
 class SignupView extends StatefulWidget {
-  const SignupView({super.key});
+  final String uemail;
+
+  const SignupView({super.key, required this.uemail});
 
   @override
   State<SignupView> createState() => _SignupViewState();
 }
 
 class _SignupViewState extends State<SignupView> {
+  final _formKey = new GlobalKey<FormState>();
+
   final TextStyle labelStyle = TextStyle(color: Colors.white, fontSize: 14);
   final TextStyle inputTextStyle = TextStyle(color: Colors.white);
+
+  final _conFullName = TextEditingController();
+  final _conDOB = TextEditingController();
+  final _conChildhoodPetName = TextEditingController();
+  final _conMotherMaidenName = TextEditingController();
+  final _conTOB = TextEditingController();
+  final _conLOB = TextEditingController();
+  final _conBloodGroup = TextEditingController();
+  final _conGender = TextEditingController();
+  final _conHeight = TextEditingController();
+  final _conEthnicity = TextEditingController();
+  final _conEyeColour = TextEditingController();
+  var dbHelper;
+
+  @override
+  void initState() {
+    super.initState();
+    dbHelper = DbHelper();
+
+    // loadUserData();
+  }
+
+  signUpView() async {
+    String ufullname = _conFullName.text;
+    String udob = _conDOB.text;
+    String uchildhoodpetname = _conChildhoodPetName.text;
+    String umothersmaidenName = _conMotherMaidenName.text;
+    String utob = _conTOB.text;
+    String ulob = _conLOB.text;
+    String ubloodgroup = _conBloodGroup.text;
+    String ugender = _conGender.text;
+    String uheight = _conHeight.text;
+    String uethnicity = _conEthnicity.text;
+    String ueyecolour = _conEyeColour.text;
+
+    if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+    } else {
+      alertDialog("Please fill all the fields");
+    }
+  }
 
 @override
   Widget build(BuildContext context) {
@@ -21,8 +69,8 @@ class _SignupViewState extends State<SignupView> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 100,
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text(
             'Biomark',
             style: TextStyle(fontSize: 14, color: Colors.white),
@@ -48,71 +96,68 @@ class _SignupViewState extends State<SignupView> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: ListView(
-          children: [
-            Text(
-              'Welcome to Biomark!',
-              style: TextStyle(
-                color: const Color.fromARGB(255, 254, 254, 254),
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              'Enter Your Profile Details',
-              style: TextStyle(
-                color: Colors.blueAccent,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20),
-            buildEditableTextField("Full Name", "Enter Your Full Name"),
-            buildEditableTextField("Date of Birth", "Enter Your Date of Birth"),
-            buildEditableTextField("Time of Birth", "Enter Your Time of Birth"),
-            buildEditableTextField("Location of Birth", "Enter Your Location of Birth"),
-            buildEditableTextField("Blood Group", "Enter Your Blood Group"),
-            buildEditableTextField("Sex", "Enter Your Sex"),
-            buildEditableTextField("Height", "Enter Your Height"),
-            buildEditableTextField("Ethnicity", "Enter Your Ethnicity"),
-            buildEditableTextField("Eye Colour", "Enter Your Eye Colour"),
-            buildEditableTextField("Mother's Maiden Name", "Enter Your Mother's Maiden Name"),
-            buildEditableTextField("Childhood Best Friend's Name", "Enter Your Best Friend's Name"),
-            buildEditableTextField("Childhood Pet's Name", "Enter Your Pet's Name"),
-            buildEditableTextField("Your Own Question", "Enter Your Question"),
-            SizedBox(height: 20),
-            Text(
-              'Re - check your details thoroughly as you cannot change them after clicking the save button!',
-              style: TextStyle(color: Colors.white60, fontSize: 14),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-                onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginView()),
-                );
-                },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              const Text(
+                'Welcome to Biomark!',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 254, 254, 254),
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              child: Text(
-                'Save',
-                style: TextStyle(color: Colors.white, fontSize: 18),
+              const Text(
+                'Enter Your Profile Details',
+                style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              buildEditableTextField("Full Name", "Enter Your Full Name", _conFullName),
+              buildEditableTextField("Date of Birth (Y-M-D)", "Enter Your Date of Birth", _conDOB),
+              buildEditableTextField("Time of Birth", "Enter Your Time of Birth", _conTOB),
+              buildEditableTextField("Location of Birth", "Enter Your Location of Birth", _conLOB),
+              buildEditableTextField("Blood Group", "Enter Your Blood Group", _conBloodGroup),
+              buildEditableTextField("Sex", "Enter Your Sex", _conGender),
+              buildEditableTextField("Height", "Enter Your Height", _conHeight),
+              buildEditableTextField("Ethnicity", "Enter Your Ethnicity", _conEthnicity),
+              buildEditableTextField("Eye Colour", "Enter Your Eye Colour", _conEyeColour),
+              buildEditableTextField("Mother's Maiden Name", "Enter Your Mother's Maiden Name", _conMotherMaidenName),
+              buildEditableTextField("Childhood Pet's Name", "Enter Your Pet's Name", _conChildhoodPetName),
+              const SizedBox(height: 20),
+              const Text(
+                'Re - check your details thoroughly as you cannot change them after clicking the save button!',
+                style: TextStyle(color: Colors.white60, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: const Color(0xFF3498DB),
+                  padding: const EdgeInsets.all(16.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0), // Set the button border radius here
+                  ),
+                ),
+                onPressed: signUpView,
+                child: const Text(
+                  'Save',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildEditableTextField(String labelText, String placeholder) {
+  Widget buildEditableTextField(String labelText, String placeholder, TextEditingController controller) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Column(
@@ -120,21 +165,63 @@ class _SignupViewState extends State<SignupView> {
         children: [
           Text(
             labelText,
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
-          SizedBox(height: 8),
-          TextField(
-            style: TextStyle(color: Colors.white),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+          TextFormField(
+            controller: controller,
+            autovalidateMode: AutovalidateMode.always,
+            keyboardType: TextInputType.text,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please $placeholder';
+              }
+
+              if(controller == _conDOB){
+                DateTime? validDate = DateTime.tryParse(value);
+                if (validDate == null) {
+                  return 'Please enter a valid date YYYY-MM-DD';
+                }
+                if (validDate.isAfter(DateTime.now())) {
+                  return 'Date of birth must be before today';
+                }
+              }
+
+              if(controller == _conTOB){
+                final timeofbirth = RegExp(r'^(?:[01]\d|2[0-3]):[0-5]\d$');
+                if (!timeofbirth.hasMatch(value)) {
+                  return 'Please enter a valid time (e.g., HH:mm)';
+                }
+              }
+
+              if(controller == _conBloodGroup){
+                const validBloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+                if (!validBloodTypes.contains(value.toUpperCase())) {
+                  return 'Please enter a valid blood type (e.g., A+, O-)';
+                }
+              }
+
+              if(controller == _conHeight){
+                final validheight = double.tryParse(value);
+                if (validheight == null) {
+                  return 'Please enter a valid height (e.g., 160.5) in cm';
+                }
+              }
+
+              return null;
+            },
+            onSaved: (val) => controller.text = val ?? '',
+            style: const TextStyle(color: Colors.white),
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.blueGrey[700],
-              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
               ),
               hintText: placeholder,
-              hintStyle: TextStyle(color: Colors.white70),
+              hintStyle: const TextStyle(color: Colors.white70),
             ),
           ),
         ],
