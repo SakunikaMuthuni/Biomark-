@@ -46,6 +46,7 @@ class _LoginViewState extends State<LoginView> {
     final SharedPreferences sp = await _pref;
 
     setState(() {
+      _conEmail.text = sp.getString("user_email") ?? '';
       _conFullName.text = sp.getString("user_fullname") ?? '';
       _conDOB.text = sp.getString("user_dob") ?? '';
       _conChildhoodPetName.text = sp.getString("user_childhoodpetname") ?? '';
@@ -85,8 +86,8 @@ class _LoginViewState extends State<LoginView> {
             icon: const Icon(Icons.settings, color: Colors.white),
             onPressed: () {
               Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Settings()),
+                context,
+                MaterialPageRoute(builder: (context) => Settings(uemail: _conEmail.text)),
               );
             },
           ),

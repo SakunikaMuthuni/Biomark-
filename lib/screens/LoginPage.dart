@@ -1,5 +1,6 @@
 import 'package:biomark/Model/UserModel.dart';
 import 'package:biomark/screens/ForgotPassword.dart';
+import 'package:biomark/screens/FrogotPasswordEmail.dart';
 import 'package:biomark/screens/LoginView.dart';
 import 'package:biomark/screens/SignupPage.dart';
 import 'package:biomark/Comm/getTextFromFields.dart';
@@ -185,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                               TextButton(
                                 onPressed: () {
                                   Navigator.push(context,
-                                      MaterialPageRoute(builder: (_) => Forgotpassword()));
+                                      MaterialPageRoute(builder: (_) => Frogotpasswordemail()));
                                 },
                                 child: const Text(
                                   'Forgot password?',

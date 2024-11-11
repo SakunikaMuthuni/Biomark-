@@ -121,23 +121,47 @@ class DbHelper{
   Future<UserProfileModel> getUserProfile(String email) async {
     print(email);
     var dbClient = await db;
-    final List<Map<String, dynamic>> maps = await dbClient.query(
-      Table_User,
-      where: 'user_email = ?',
-      whereArgs: [email],
-    );
 
-    print(maps.first['user_fullname']);
-    print(maps.first['user_ethnicity']);
-    print(maps.first['user_eyecolour']);
-    print(maps.first['user_mothermaidenname']);
+    // Using rawQuery to fetch user profile based on email
+    final List<Map<String, dynamic>> maps = await dbClient.rawQuery(
+        'SELECT * FROM $Table_User WHERE user_email = ?', [email]);
 
     if (maps.isNotEmpty) {
+      print(maps.first['user_fullname']);
+      print(maps.first['user_ethnicity']);
+      print(maps.first['user_eyecolour']);
+      print(maps.first['user_mothermaidenname']);
+
       return UserProfileModel.fromMap(maps.first);
     } else {
       throw Exception('User profile not found for email: $email');
     }
+  }
 
+  Future<String?> getOwnQuestion(String email) async {
+    var dbClient = await db;
+
+    List<Map<String, dynamic>> result = await dbClient.query(
+        Table_User,
+        where: 'user_email = ?',
+        whereArgs: [email],
+        columns: ['user_ownquestion']
+    );
+
+    if (result.isNotEmpty) {
+      // Return the answer if found
+      return result.first['user_ownquestion'];
+    }
+    return null; // If no result found, return null
+  }
+
+  Future<int> deleteUser(String email) async {
+    var dbClient = await db;
+    return await dbClient.delete(
+      Table_User,
+      where: '$User_Email = ?',
+      whereArgs: [email],
+    );
   }
 
 }

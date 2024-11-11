@@ -8,7 +8,9 @@ import '../Comm/comHelper.dart';
 import '../Comm/getTextFromFields.dart';
 
 class Forgotpassword extends StatefulWidget {
-  const Forgotpassword({super.key});
+  final String uemail;
+
+  const Forgotpassword({super.key, required this.uemail});
 
   @override
   State<Forgotpassword> createState() => _ForgotpasswordState();
@@ -16,6 +18,30 @@ class Forgotpassword extends StatefulWidget {
 
 class _ForgotpasswordState extends State<Forgotpassword> {
   final _formKey = new GlobalKey<FormState>();
+
+  final _conFullName = TextEditingController();
+  final _conDOB = TextEditingController();
+  final _conMotherMaidenName = TextEditingController();
+  final _conOwnQuestion = TextEditingController();
+  final _conAnswerForOwnQuestion = TextEditingController();
+
+  String? _userOwnQuestion;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAnswerForOwnQuestion();
+  }
+
+  void _fetchAnswerForOwnQuestion() async {
+    DbHelper dbHelper = DbHelper();
+    String? answer = await dbHelper.getOwnQuestion(widget.uemail);
+    setState(() {
+      _userOwnQuestion = answer;
+      _conAnswerForOwnQuestion.text = _userOwnQuestion ?? '';
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +89,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                     ),
 
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.80,
+                      height: MediaQuery.of(context).size.height * 0.85,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.black.withOpacity(0.6),
@@ -82,7 +108,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          //Login text
+                          //Recover Account
                           const Text(
                             'Recover Account',
                             style: TextStyle(
@@ -102,7 +128,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                             ),
                           ),
 
-                          //Email address text
+                          //Full Name text
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 20.0),
                             margin: const EdgeInsets.only(top: 20.0),
@@ -111,7 +137,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Email",
+                                  "Full Name",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -120,10 +146,10 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                             ),
                           ),
 
-                          //Email address text input field
-                          // getTextFromFields(controller: _conEmail ,hintName: 'Enter Your Email Address', inputType: TextInputType.emailAddress),
+                          // Full Name text input field
+                          getTextFromFields(controller: _conFullName ,hintName: 'Enter Your Full Name', inputType: TextInputType.emailAddress),
 
-                          //Password text
+                          //Date of Birth text
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 20.0),
                             margin: const EdgeInsets.only(top: 20.0),
@@ -132,7 +158,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Password",
+                                  "Date of Birth",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -141,35 +167,52 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                             ),
                           ),
 
-                          //password text input field
-                          // getTextFromFields(controller: _conPassword ,hintName: 'Enter Your Password', isObscureText: true),
-                          //
-                          // //re-enter password text input field
-                          // getTextFromFields(controller: _conRePassword ,hintName: 'Re-Enter Your Password', isObscureText: true),
+                          //Date of Birth text input field
+                          getTextFromFields(controller: _conDOB ,hintName: 'Enter Your Date of Birth'),
 
-                          //Password detail text
+                          //Mother's Maiden Name text
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            margin: const EdgeInsets.only(top: 8.0),
+                            margin: const EdgeInsets.only(top: 20.0),
 
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  child: Text(
-                                    "Your password must contain at least an Uppercase character,a lower case character and a symbol ",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 11.0,
-                                    ),
-                                    softWrap: true,
+                                Text(
+                                  "Mother's Maiden Name",
+                                  style: TextStyle(
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
                             ),
                           ),
 
-                          //Signup button
+                          //Mother's Maiden Name text input field
+                          getTextFromFields(controller: _conMotherMaidenName ,hintName: "Enter Your Mother's Maiden Name"),
+
+                          //Your Own question
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            margin: const EdgeInsets.only(top: 20.0),
+
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _conAnswerForOwnQuestion.text,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          //answer for your own question  text input field
+                          getTextFromFields(controller: _conAnswerForOwnQuestion ,hintName: 'Enter the answer for your own question'),
+
+                          //Next button
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 30.0),
                             margin: const EdgeInsets.only(top: 25.0),
@@ -189,7 +232,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                               ),
                               onPressed: (){},
                               child: const Text(
-                                'Signup',
+                                'Next',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -204,7 +247,7 @@ class _ForgotpasswordState extends State<Forgotpassword> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  "Already have an account?",
+                                  "Remeber the Password?",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),

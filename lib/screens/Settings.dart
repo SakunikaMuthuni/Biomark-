@@ -1,9 +1,14 @@
+import 'package:biomark/screens/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:biomark/screens/EditEmail.dart';
 import 'package:biomark/screens/EditPassword.dart';
 
+import '../DatabaseHandler/DbHelper.dart';
+
 class Settings extends StatefulWidget {
-  const Settings({super.key});
+  final String uemail;
+
+  const Settings({super.key, required this.uemail});
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -12,6 +17,8 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   final TextStyle labelStyle = TextStyle(color: Colors.white, fontSize: 14);
   final TextStyle inputTextStyle = TextStyle(color: Colors.white);
+
+
 
 @override
   Widget build(BuildContext context) {
@@ -115,18 +122,18 @@ class _SettingsState extends State<Settings> {
               style: TextStyle(color: Colors.white),
             ),
                 
-            SizedBox(height: 32),
-            Text(
+            const SizedBox(height: 32),
+            const Text(
               'Account Privacy',
               style: TextStyle(color: Colors.blue, fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               'If you want to discontinue sharing your details to Biomark, '
               'You can simply unsubscribe This and all your information will delete from our databases.',
               style: TextStyle(color: Colors.grey),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Center(
               child: ElevatedButton(
               onPressed: () {
@@ -144,11 +151,13 @@ class _SettingsState extends State<Settings> {
                     child: Text('Cancel'),
                     ),
                     ElevatedButton(
-                    onPressed: () {
-                      // Add your unsubscribe logic here
-                      
-                        Navigator.pushReplacementNamed(context, '/SignupPage');
-                    },
+                      onPressed: () async {
+                        await DbHelper().deleteUser(widget.uemail); // replace with dynamic email as needed
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => LoginPage()),
+                        );
+                      },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 246, 83, 72),
                     ),
@@ -181,8 +190,8 @@ class _SettingsState extends State<Settings> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Unsubscribe Confirmation'),
-                        content: Text('Are you sure you want to unsubscribe? This action cannot be undone.'),
+                        title: Text('Logout Confirmation'),
+                        content: Text('Are you sure you want to logout?'),
                         actions: [
                           TextButton(
                             onPressed: () {
@@ -194,7 +203,8 @@ class _SettingsState extends State<Settings> {
                             onPressed: () {
                               // Add your unsubscribe logic here
 
-                              Navigator.pushReplacementNamed(context, '/LoginPage');
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (_) => LoginPage()));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color.fromARGB(255, 246, 83, 72),
@@ -214,7 +224,7 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
                 child: Text(
-                  'Unsubscribe',
+                  'Logout',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
