@@ -1,3 +1,5 @@
+import 'package:biomark/Comm/comHelper.dart';
+import 'package:biomark/Model/UserProfileModel.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -8,7 +10,7 @@ import 'package:biomark/Model/UserModel.dart';
 class DbHelper{
   static Database? _db;
 
-  static const DB_Name = 'test.db';
+  static const DB_Name = 'biomarkLocalDatabse.db';
   static const String Table_User = 'user';
   static const int Version = 1;
 
@@ -18,7 +20,7 @@ class DbHelper{
   static const String User_FullName = 'user_fullname';
   static const String User_DOB = 'user_dob';
   static const String User_ChildhoodPetName = 'user_childhoodpetname';
-  static const String User_MotherMaidenName = 'user_mothermadienname';
+  static const String User_MotherMaidenName = 'user_mothermaidenname';
   static const String User_TOB = 'user_tob';
   static const String User_LOB = 'user_lob';
   static const String User_BloodGroup = 'user_bloodgroup';
@@ -26,6 +28,8 @@ class DbHelper{
   static const String User_Height = 'user_height';
   static const String User_Ethnicity = 'user_ethnicity';
   static const String User_EyeColour = 'user_eyecolour';
+  static const String User_OwnQuestion = 'user_ownquestion';
+  static const String User_AnswerForOwnQuestion = 'user_answerforownquestion';
 
   Future<Database> get db async {
     if (_db != null) {
@@ -59,8 +63,10 @@ class DbHelper{
         "$User_Gender TEXT,"
         "$User_Height REAL,"
         "$User_Ethnicity TEXT,"
-        "$User_EyeColour TEXT"
-        ")");
+        "$User_EyeColour TEXT, "
+        "$User_OwnQuestion TEXT, "
+        "$User_AnswerForOwnQuestion TEXT"
+        ");");
   }
 
   Future<int> saveData(UserModel user) async{
@@ -92,4 +98,24 @@ class DbHelper{
 
     return null;
   }
+
+  Future<int> saveProfileData(UserProfileModel user) async {
+    var dbClient = await db;
+
+    bool exists = await emailExists(user.user_email ?? '');
+
+    if (exists) {
+      var res = await dbClient.update(
+        Table_User,
+        user.toMap(),
+        where: 'user_email = ?',
+        whereArgs: [user.user_email ?? ''],
+      );
+      return res;
+    } else {
+      alertDialog("Error: User Not Found");
+      return 0;
+    }
+  }
+
 }

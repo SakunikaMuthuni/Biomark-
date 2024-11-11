@@ -38,9 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       await dbHelper.getLoginUser(uemail, upassword).then((userData) {
         if(userData != null){
           Navigator.pushAndRemoveUntil(
-              context, MaterialPageRoute(builder: (_) => LoginView()),
-              // Navigator.push(
-              //     context, MaterialPageRoute(builder: (_) => SignupView(uemail: uemail)));
+              context, MaterialPageRoute(builder: (_) => LoginView(uemail: uemail)),
                   (Route<dynamic> route) => false);
         }else{
           alertDialog("Error: User not Found");
