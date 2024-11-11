@@ -1,4 +1,5 @@
 import 'package:biomark/Model/UserProfileModel.dart';
+import 'package:biomark/screens/LoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:biomark/screens/Settings.dart';
 import 'package:biomark/screens/LoginView.dart';
@@ -85,7 +86,7 @@ class _SignupViewState extends State<SignupView> {
             uanswerforownquestion);
         await dbHelper.saveProfileData(uProfileModel).then((userData){
           Navigator.pushAndRemoveUntil(
-              context, MaterialPageRoute(builder: (_) => LoginView(uemail: widget.uemail)),
+              context, MaterialPageRoute(builder: (_) => LoginPage()),
                   (Route<dynamic> route) => false);
           alertDialog("Profile Data Successfully Saved");
 
