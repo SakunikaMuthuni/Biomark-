@@ -1,12 +1,15 @@
 import 'package:biomark/Model/UserModel.dart';
+import 'package:biomark/screens/ForgotPassword.dart';
 import 'package:biomark/screens/LoginView.dart';
 import 'package:biomark/screens/SignupPage.dart';
 import 'package:biomark/Comm/getTextFromFields.dart';
 import 'package:biomark/screens/SignupView.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Comm/comHelper.dart';
 import '../DatabaseHandler/DbHelper.dart';
+import '../Model/UserProfileModel.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Future<SharedPreferences> _pref = SharedPreferences.getInstance();
   final _formKey = new GlobalKey<FormState>();
 
   final _conEmail = TextEditingController();
@@ -24,6 +28,8 @@ class _LoginPageState extends State<LoginPage> {
   void initState(){
     super.initState();
     dbHelper = DbHelper();
+
+
   }
 
   login() async {
@@ -35,11 +41,15 @@ class _LoginPageState extends State<LoginPage> {
     }else if(upassword.isEmpty){
       alertDialog("Please enter the Password");
     }else{
-      await dbHelper.getLoginUser(uemail, upassword).then((userData) {
+      await dbHelper.getLoginUser(uemail, upassword).then((userData) async {
         if(userData != null){
-          Navigator.pushAndRemoveUntil(
-              context, MaterialPageRoute(builder: (_) => LoginView(uemail: uemail)),
-                  (Route<dynamic> route) => false);
+          UserProfileModel userProfile = await dbHelper.getUserProfile(userData.user_email);
+          setSP(userData, userProfile).whenComplete((){
+            Navigator.pushAndRemoveUntil(
+                context, MaterialPageRoute(builder: (_) => LoginView()),
+                    (Route<dynamic> route) => false);
+          });
+
         }else{
           alertDialog("Error: User not Found");
         }
@@ -51,12 +61,26 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  // Future setSP(UserModel user) async{
-  //   final SharedPreferences sp = await _pref;
-  //
-  //   sp.setString("user_email", user.user_email);
-  //   sp.setString("user_password", user.user_password);
-  // }
+  Future<void> setSP(UserModel user, UserProfileModel userProfile) async {
+    final SharedPreferences sp = await _pref;
+
+    sp.setString("user_email", user.user_email);
+
+    sp.setString("user_fullname", userProfile.user_fullname ?? '');
+    sp.setString("user_dob", userProfile.user_dob ?? '');
+    sp.setString("user_childhoodpetname", userProfile.user_childhoodpetname ?? '');
+    sp.setString("user_mothermaidenname", userProfile.user_mothermaidenname ?? '');
+    sp.setString("user_tob", userProfile.user_tob ?? '');
+    sp.setString("user_lob", userProfile.user_lob ?? '');
+    sp.setString("user_bloodgroup", userProfile.user_bloodgroup ?? '');
+    sp.setString("user_gender", userProfile.user_gender ?? '');
+    sp.setString("user_height", (userProfile.user_height ?? '') as String);
+    sp.setString("user_ethnicity", userProfile.user_ethnicity ?? '');
+    sp.setString("user_eyecolour", userProfile.user_eyecolour ?? '');
+    sp.setString("user_ownquestion", userProfile.user_ownquestion ?? '');
+    sp.setString("user_answerforownquestion", userProfile.user_answerforownquestion ?? '');
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +184,8 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               TextButton(
                                 onPressed: () {
-                                  // Handle forgot password logic here
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) => Forgotpassword()));
                                 },
                                 child: const Text(
                                   'Forgot password?',

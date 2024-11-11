@@ -118,4 +118,26 @@ class DbHelper{
     }
   }
 
+  Future<UserProfileModel> getUserProfile(String email) async {
+    print(email);
+    var dbClient = await db;
+    final List<Map<String, dynamic>> maps = await dbClient.query(
+      Table_User,
+      where: 'user_email = ?',
+      whereArgs: [email],
+    );
+
+    print(maps.first['user_fullname']);
+    print(maps.first['user_ethnicity']);
+    print(maps.first['user_eyecolour']);
+    print(maps.first['user_mothermaidenname']);
+
+    if (maps.isNotEmpty) {
+      return UserProfileModel.fromMap(maps.first);
+    } else {
+      throw Exception('User profile not found for email: $email');
+    }
+
+  }
+
 }

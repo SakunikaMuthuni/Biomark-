@@ -8,11 +8,11 @@ class UserProfileModel {
   String? user_lob;
   String? user_bloodgroup;
   String? user_gender;
-  double? user_height;
   String? user_ethnicity;
   String? user_eyecolour;
   String? user_ownquestion;
   String? user_answerforownquestion;
+  double? user_height;
 
   UserProfileModel(
       this.user_email,
@@ -55,7 +55,7 @@ class UserProfileModel {
     user_fullname = map['user_fullname'];
     user_dob = map['user_dob'];
     user_childhoodpetname = map['user_childhoodpetname'];
-    user_mothermaidenname = map['user_mothermadienname'];
+    user_mothermaidenname = map['user_mothermaidenname'];
     user_tob = map['user_tob'];
     user_lob = map['user_lob'];
     user_bloodgroup = map['user_bloodgroup'];
