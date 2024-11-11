@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:biomark/screens/Settings.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+  final String uemail;
+
+  const LoginView({super.key, required this.uemail});
 
   @override
   State<LoginView> createState() => _LoginViewState();

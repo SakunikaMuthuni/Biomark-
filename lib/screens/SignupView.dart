@@ -1,3 +1,4 @@
+import 'package:biomark/Model/UserProfileModel.dart';
 import 'package:flutter/material.dart';
 import 'package:biomark/screens/Settings.dart';
 import 'package:biomark/screens/LoginView.dart';
@@ -32,6 +33,9 @@ class _SignupViewState extends State<SignupView> {
   final _conHeight = TextEditingController();
   final _conEthnicity = TextEditingController();
   final _conEyeColour = TextEditingController();
+  final _conOwnQuestion = TextEditingController();
+  final _conAnswerForOwnQuestion = TextEditingController();
+
   var dbHelper;
 
   @override
@@ -46,7 +50,7 @@ class _SignupViewState extends State<SignupView> {
     String ufullname = _conFullName.text;
     String udob = _conDOB.text;
     String uchildhoodpetname = _conChildhoodPetName.text;
-    String umothersmaidenName = _conMotherMaidenName.text;
+    String umothermaidenName = _conMotherMaidenName.text;
     String utob = _conTOB.text;
     String ulob = _conLOB.text;
     String ubloodgroup = _conBloodGroup.text;
@@ -54,9 +58,46 @@ class _SignupViewState extends State<SignupView> {
     String uheight = _conHeight.text;
     String uethnicity = _conEthnicity.text;
     String ueyecolour = _conEyeColour.text;
+    String uownquestion = _conOwnQuestion.text;
+    String uanswerforownquestion = _conAnswerForOwnQuestion.text;
+    double? uheightParsed = double.tryParse(uheight);
 
     if (_formKey.currentState != null && _formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      bool emailExists = await dbHelper.emailExists(widget.uemail);
+
+      if(emailExists){
+        UserProfileModel uProfileModel = UserProfileModel(
+            widget.uemail,
+            ufullname,
+            udob,
+            uchildhoodpetname,
+            umothermaidenName,
+            utob,
+            ulob,
+            ubloodgroup,
+            ugender,
+            uheightParsed ?? 0.0,
+            uethnicity,
+            ueyecolour,
+            uownquestion,
+            uanswerforownquestion);
+        await dbHelper.saveProfileData(uProfileModel).then((userData){
+          Navigator.pushAndRemoveUntil(
+              context, MaterialPageRoute(builder: (_) => LoginView(uemail: widget.uemail)),
+                  (Route<dynamic> route) => false);
+          alertDialog("Profile Data Successfully Saved");
+
+
+        }).catchError((error){
+          print(error);
+          alertDialog("Error: Data Save Fail");
+        });
+
+      }else{
+        alertDialog("Error: User is not Found.");
+      }
     } else {
       alertDialog("Please fill all the fields");
     }
@@ -128,6 +169,8 @@ class _SignupViewState extends State<SignupView> {
               buildEditableTextField("Eye Colour", "Enter Your Eye Colour", _conEyeColour),
               buildEditableTextField("Mother's Maiden Name", "Enter Your Mother's Maiden Name", _conMotherMaidenName),
               buildEditableTextField("Childhood Pet's Name", "Enter Your Pet's Name", _conChildhoodPetName),
+              buildEditableTextField("Your Own Question", "Enter Your Own Question", _conOwnQuestion),
+              buildEditableTextField("Answer for Your Own Question", "Enter The Answer for Your Own Question", _conAnswerForOwnQuestion),
               const SizedBox(height: 20),
               const Text(
                 'Re - check your details thoroughly as you cannot change them after clicking the save button!',
