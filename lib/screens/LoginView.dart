@@ -114,54 +114,99 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
             SizedBox(height: 20),
-             buildTextField("Full Name", _conFullName),
-            buildTextField("Date of Birth", _conDOB),
-            buildTextField("Time of Birth", _conTOB),
-            buildTextField("Location of Birth", _conLOB),
-            buildTextField("Blood Group", _conBloodGroup),
-            buildTextField("Sex", _conGender),
-            buildTextField("Height", _conHeight),
-            buildTextField("Ethnicity", _conEthnicity),
-            buildTextField("Eye Colour", _conEyeColour),
-            buildTextField("Mother's Maiden Name", _conMotherMaidenName),
-            buildTextField("Childhood Pet's Name's Name", _conChildhoodPetName),
-            buildTextField("Your Own Question", _conOwnQuestion),
-            buildTextField("Answer for your Own Question", _conAnswerForOwnQuestion),
+            //  buildTextField("Full Name", _conFullName),
+            // buildTextField("Date of Birth", _conDOB),
+            // buildTextField("Time of Birth", _conTOB),
+            // buildTextField("Location of Birth", _conLOB),
+            // buildTextField("Blood Group", _conBloodGroup),
+            // buildTextField("Sex", _conGender),
+            // buildTextField("Height", _conHeight),
+            // buildTextField("Ethnicity", _conEthnicity),
+            // buildTextField("Eye Colour", _conEyeColour),
+            // buildTextField("Mother's Maiden Name", _conMotherMaidenName),
+            // buildTextField("Childhood Pet's Name's Name", _conChildhoodPetName),
+            // buildTextField("Your Own Question", _conOwnQuestion),
+            // buildTextField("Answer for your Own Question", _conAnswerForOwnQuestion),
+
+            buildTextField("Full Name", "Jayathma Perera"),
+            buildTextField("Date of Birth", ""),
+            buildTextField("Time of Birth", ""),
+            buildTextField("Location of Birth", ""),
+            buildTextField("Blood Group", ""),
+            buildTextField("Sex", "Female"),
+            buildTextField("Height", ""),
+            buildTextField("Ethnicity", "Sri Lankan"),
+            buildTextField("Eye Colour", "Brown"),
+            buildTextField("Mother's Maiden Name", ""),
+            buildTextField("Childhood Pet's Name's Name", ""),
+            buildTextField("Your Own Question", "bed time normally"),
+            buildTextField("Answer for your Own Question", "12.30pm"),
           ],
         ),
       ),
     );
   }
 
-  Widget buildTextField(String labelText, TextEditingController controller) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            labelText,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-          ),
-          const SizedBox(height: 8),
-          TextFormField(
-            controller: controller,
-            enabled: false,
-            style: const TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.blueGrey[700],
-              contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              hintText: controller.text.isEmpty ? null : controller.text,
-              hintStyle: const TextStyle(color: Colors.white70),
+  // Widget buildTextField(String labelText, TextEditingController controller) {
+  //   return Padding(
+  //     padding: const EdgeInsets.only(bottom: 16.0),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           labelText,
+  //           style: const TextStyle(color: Colors.white, fontSize: 16),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         TextFormField(
+  //           controller: controller,
+  //           enabled: false,
+  //           style: const TextStyle(color: Colors.white),
+  //           decoration: InputDecoration(
+  //             filled: true,
+  //             fillColor: Colors.blueGrey[700],
+  //             contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+  //             border: OutlineInputBorder(
+  //               borderRadius: BorderRadius.circular(10),
+  //               borderSide: BorderSide.none,
+  //             ),
+  //             hintText: controller.text.isEmpty ? null : controller.text,
+  //             hintStyle: const TextStyle(color: Colors.white70),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget buildTextField(String labelText, String Placeholder) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              labelText,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
-          ),
-        ],
-      ),
-    );
-  }
+            const SizedBox(height: 8),
+            TextFormField(
+              enabled: false,
+              style: const TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.blueGrey[700],
+                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
+                hintText: Placeholder,
+                hintStyle: const TextStyle(color: Colors.white70),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 }
